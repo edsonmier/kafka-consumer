@@ -14,8 +14,9 @@ public class MessageEntity {
     @Column(name = "message_id")
     private int messageId;
 
-    @Column(name = "from_number")
-    private long fromNumber;
+    @ManyToOne
+    @Column(name = "from_contact")
+    private ContactEntity contact;
 
     @Column(name = "message_text")
     private String messageText;
@@ -29,12 +30,12 @@ public class MessageEntity {
 
 
     public MessageEntity(){}
-    public MessageEntity(int messageId, long fromNumber, String messageText, Date sentDatetime, ConversationEntity conversation) {
+
+    public MessageEntity(int messageId, ContactEntity contact, String messageText, Date sentDatetime, ConversationEntity conversation) {
         this.messageId = messageId;
-        this.fromNumber = fromNumber;
+        this.contact = contact;
         this.messageText = messageText;
         this.sentDatetime = sentDatetime;
         this.conversation = conversation;
     }
-
 }

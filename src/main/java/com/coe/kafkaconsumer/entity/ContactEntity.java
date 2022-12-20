@@ -28,18 +28,25 @@ public class ContactEntity {
     @Column(name = "phone_number")
     private long phoneNumber;
 
+    @Column(name = "status")
+    private String status;
+
     @OneToMany(mappedBy = "contact")
     private Set<GroupMemberEntity> groupMemberSet;
+
+    @OneToMany(mappedBy = "contact")
+    private Set<MessageEntity> messageEntitySet;
 
 
     public ContactEntity(){}
 
-    public ContactEntity(int contactId, String firstName, String lastName, byte[] profilePhoto, long phoneNumber) {
+    public ContactEntity(int contactId, String firstName, String lastName, byte[] profilePhoto, long phoneNumber, String status) {
         this.contactId = contactId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.profilePhoto = profilePhoto;
         this.phoneNumber = phoneNumber;
+        this.status = status;
     }
 
     public ContactEntity(Contact contact) {
