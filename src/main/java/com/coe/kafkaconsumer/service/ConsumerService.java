@@ -16,7 +16,7 @@ public class ConsumerService {
     @Autowired
     private ContactRepository contactRepository;
 
-    @KafkaListener(topics = "NewTopic2", groupId = "group-json")
+    @KafkaListener(topics = "contact-save-topic", groupId = "group-json")
     public void save(ConsumerRecord<Long, Contact> record) throws IOException{
         Contact contact = record.value();
         ContactEntity entity = new ContactEntity(contact);

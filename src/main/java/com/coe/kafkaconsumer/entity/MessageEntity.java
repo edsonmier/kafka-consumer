@@ -15,7 +15,7 @@ public class MessageEntity {
     private int messageId;
 
     @ManyToOne
-    @Column(name = "from_contact")
+    @JoinColumn(name = "from_contact")
     private ContactEntity contact;
 
     @Column(name = "message_text")
