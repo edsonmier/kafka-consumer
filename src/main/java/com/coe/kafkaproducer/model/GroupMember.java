@@ -1,4 +1,4 @@
-package com.coe.kafkaconsumer.model;
+package com.coe.kafkaproducer.model;
 
 import lombok.Data;
 import java.util.Date;
@@ -14,11 +14,11 @@ public class GroupMember {
 
 
     public GroupMember(){}
-    public GroupMember(Contact contactId, Conversation conversationId, Date joinedDatetime, Date leftDatetime) {
-        this.contact = contactId;
-        this.conversation = conversationId;
+
+    public GroupMember(Contact contact, Conversation conversation, Date joinedDatetime, Date leftDatetime) {
+        this.contact = contact;
+        this.conversation = conversation;
         this.joinedDatetime = joinedDatetime;
         this.leftDatetime = leftDatetime;
     }
-
 }

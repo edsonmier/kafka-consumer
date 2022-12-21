@@ -1,5 +1,7 @@
 package com.coe.kafkaconsumer.entity;
 
+import com.coe.kafkaproducer.model.GroupMember;
+import com.coe.kafkaproducer.model.Message;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.Date;
@@ -37,5 +39,11 @@ public class MessageEntity {
         this.messageText = messageText;
         this.sentDatetime = sentDatetime;
         this.conversation = conversation;
+    }
+
+    public MessageEntity(Message message) {
+        this.messageId = message.getMessageId();
+        this.messageText = message.getMessageText();
+        this.sentDatetime = message.getSentDatetime();
     }
 }

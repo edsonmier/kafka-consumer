@@ -1,4 +1,4 @@
-package com.coe.kafkaconsumer.model;
+package com.coe.kafkaproducer.model;
 
 import lombok.Data;
 import java.util.Date;

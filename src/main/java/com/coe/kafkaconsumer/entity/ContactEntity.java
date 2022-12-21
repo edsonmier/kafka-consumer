@@ -1,6 +1,6 @@
 package com.coe.kafkaconsumer.entity;
 
-import com.coe.kafkaconsumer.model.Contact;
+import com.coe.kafkaproducer.model.Contact;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,7 +10,6 @@ import java.util.Set;
 @Table(name = "contact")
 @Data
 public class ContactEntity {
-
     @Id
     @Column(name = "contact_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +37,9 @@ public class ContactEntity {
     private Set<MessageEntity> messageEntitySet;
 
 
-    public ContactEntity(){}
+    public ContactEntity(){
+
+    }
 
     public ContactEntity(int contactId, String firstName, String lastName, byte[] profilePhoto, long phoneNumber, String status) {
         this.contactId = contactId;
@@ -55,5 +56,6 @@ public class ContactEntity {
         this.lastName = contact.getLastName();
         this.profilePhoto = contact.getProfilePhoto();
         this.phoneNumber = contact.getPhoneNumber();
+        this.status = contact.getStatus();
     }
 }

@@ -1,5 +1,7 @@
 package com.coe.kafkaconsumer.entity;
 
+import com.coe.kafkaproducer.model.Contact;
+import com.coe.kafkaproducer.model.Conversation;
 import lombok.Data;
 import jakarta.persistence.*;
 
@@ -24,11 +26,18 @@ public class ConversationEntity {
     @OneToMany(mappedBy = "conversation")
     private Set<MessageEntity> messages;
 
+    public ConversationEntity(){
 
-    public ConversationEntity(){}
+    }
+
     public ConversationEntity(int conversationId, String conversationName) {
         this.conversationId = conversationId;
         this.conversationName = conversationName;
+    }
+
+    public ConversationEntity(Conversation conversation) {
+        this.conversationId = conversation.getConversationId();
+        this.conversationName = conversation.getConversationName();
     }
 
 }

@@ -1,5 +1,7 @@
 package com.coe.kafkaconsumer.entity;
 
+import com.coe.kafkaproducer.model.Conversation;
+import com.coe.kafkaproducer.model.GroupMember;
 import lombok.Data;
 import java.util.Date;
 import jakarta.persistence.*;
@@ -37,5 +39,11 @@ public class GroupMemberEntity {
         this.conversation = conversation;
         this.joinedDatetime = joinedDatetime;
         this.leftDatetime = leftDatetime;
+    }
+
+    public GroupMemberEntity(GroupMember groupMember) {
+        this.groupMemberId = groupMember.getGroupMemberId();
+        this.joinedDatetime = groupMember.getJoinedDatetime();
+        this.leftDatetime = groupMember.getLeftDatetime();
     }
 }
