@@ -12,7 +12,6 @@ public class GroupMember {
     private Date joinedDatetime;
     private Date leftDatetime;
 
-
     public GroupMember(){}
 
     public GroupMember(Contact contact, Conversation conversation, Date joinedDatetime, Date leftDatetime) {

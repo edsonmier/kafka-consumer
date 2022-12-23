@@ -12,7 +12,6 @@ public class Message {
     private Date sentDatetime;
     private Conversation conversation;
 
-
     public Message(){}
 
     public Message(int messageId, Contact fromNumber, String messageText, Date sentDatetime, Conversation conversation) {

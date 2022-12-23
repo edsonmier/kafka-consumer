@@ -14,7 +14,6 @@ public class Contact implements Serializable {
     private long phoneNumber;
     private String status;
 
-
     public Contact(){}
 
     public Contact(int contactId, String firstName, String lastName, byte[] profilePhoto, long phoneNumber, String status) {

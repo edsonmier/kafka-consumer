@@ -8,7 +8,6 @@ public class Conversation {
     private int conversationId;
     private String conversationName;
 
-
     public Conversation(){}
     public Conversation(int conversationId, String conversationName) {
         this.conversationId = conversationId;
