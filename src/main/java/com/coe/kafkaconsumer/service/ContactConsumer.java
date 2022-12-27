@@ -30,6 +30,23 @@ public class ContactConsumer {
         }
     }
 
+    @KafkaListener(topics = "contact-update-topic", groupId = "group-json")
+    public void update(ConsumerRecord<Long, Contact> record) throws IOException{
+        try{
+            Contact contact = record.value();
+            // Validation to check if element with ID exists in database.
+            if (!contactRepository.findById(contact.getContactId()).isEmpty()){
+                ContactEntity entity = new ContactEntity(contact);
+                contactRepository.save(entity);
+                System.out.println("Contact updated successfully.");
+            } else {
+                System.out.println("There isn't a contact with the given ID.");
+            }
+        } catch(Exception e){
+            System.out.println("Couldn't update contact.");
+        }
+    }
+
     @KafkaListener(topics = "contact-delete-topic", groupId = "group-json")
     public void delete(ConsumerRecord<Long, Integer> record) throws IOException {
         try{

@@ -6,6 +6,7 @@ import com.coe.kafkaconsumer.entity.GroupMemberEntity;
 import com.coe.kafkaconsumer.repository.ContactRepository;
 import com.coe.kafkaconsumer.repository.ConversationRepository;
 import com.coe.kafkaconsumer.repository.GroupMemberRepository;
+import com.coe.kafkaproducer.model.Conversation;
 import com.coe.kafkaproducer.model.GroupMember;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,27 @@ public class GroupMemberConsumer {
                 System.out.println("Specified field doesn't exist in the current context.");
             }
             System.out.println("Couldn't save group member.");
+        }
+    }
+
+    @KafkaListener(topics = "groupmember-update-topic", groupId = "group-json")
+    public void update(ConsumerRecord<Long, GroupMember> record) throws IOException{
+        try{
+            GroupMember groupMember = record.value();
+            // Validation to check if element with ID exists in database.
+            if (!groupMemberRepository.findById(groupMember.getGroupMemberId()).isEmpty()){
+                GroupMemberEntity entity = new GroupMemberEntity(groupMember);
+                Optional<ContactEntity> contact = contactRepository.findById((int)(groupMember.getContact().getContactId()));
+                Optional<ConversationEntity> conversation = conversationRepository.findById((int)(groupMember.getConversation().getConversationId()));
+                entity.setContact(contact.get());
+                entity.setConversation(conversation.get());
+                groupMemberRepository.save(entity);
+                System.out.println("Group member updated successfully.");
+            } else {
+                System.out.println("There isn't a group member with the given ID.");
+            }
+        } catch(Exception e){
+            System.out.println("Couldn't update group member.");
         }
     }
 

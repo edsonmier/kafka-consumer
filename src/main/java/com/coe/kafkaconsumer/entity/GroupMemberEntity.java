@@ -16,11 +16,11 @@ public class GroupMemberEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int groupMemberId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "contact_id")
     private ContactEntity contact;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "conversation_id")
     private ConversationEntity conversation;
 

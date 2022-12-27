@@ -2,10 +2,12 @@ package com.coe.kafkaconsumer.service;
 
 import com.coe.kafkaconsumer.entity.ContactEntity;
 import com.coe.kafkaconsumer.entity.ConversationEntity;
+import com.coe.kafkaconsumer.entity.GroupMemberEntity;
 import com.coe.kafkaconsumer.entity.MessageEntity;
 import com.coe.kafkaconsumer.repository.ContactRepository;
 import com.coe.kafkaconsumer.repository.ConversationRepository;
 import com.coe.kafkaconsumer.repository.MessageRepository;
+import com.coe.kafkaproducer.model.GroupMember;
 import com.coe.kafkaproducer.model.Message;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,27 @@ public class MessageConsumer {
                 System.out.println("Specified field doesn't exist in the current context.");
             }
             System.out.println("Couldn't save message.");
+        }
+    }
+
+    @KafkaListener(topics = "message-update-topic", groupId = "group-json")
+    public void update(ConsumerRecord<Long, Message> record) throws IOException{
+        try{
+            Message message = record.value();
+            // Validation to check if element with ID exists in database.
+            if (!messageRepository.findById(message.getMessageId()).isEmpty()){
+                MessageEntity entity = new MessageEntity(message);
+                Optional<ContactEntity> contact = contactRepository.findById((int)(message.getFromNumber().getContactId()));
+                Optional<ConversationEntity> conversation = conversationRepository.findById((int)(message.getConversation().getConversationId()));
+                entity.setContact(contact.get());
+                entity.setConversation(conversation.get());
+                messageRepository.save(entity);
+                System.out.println("Message updated successfully.");
+            } else {
+                System.out.println("There isn't a message with the given ID.");
+            }
+        } catch(Exception e){
+            System.out.println("Couldn't update message.");
         }
     }
 
